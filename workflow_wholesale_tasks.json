@@ -1,0 +1,12 @@
+{
+    "mssql/create_replace_table_mssql": [
+      {
+        "task_suffix": "gaccentry",
+        "delta_table_name": "gaccentry"
+      },
+      {
+        "task_suffix": "gaccentrya",
+        "delta_table_name": "gaccentrya"
+      }
+    ]
+  }

@@ -1,0 +1,42 @@
+{
+  "id": "{{ id }}",
+  "service": "jobs",
+  "properties": {
+    "email_notifications": {
+      "on_failure": ["databricks@jazwares.com"],
+      "no_alert_for_skipped_runs": false
+    },
+    "name": "{{ id }}",
+    "timeout_seconds": 0,
+    "schedule": {
+      "quartz_cron_expression": "6 45 23 * * ?",
+      "timezone_id": "America/New_York",
+      "pause_status": "UNPAUSED"
+    },
+    "max_concurrent_runs": 1,
+    "tasks": [
+      {% for notebook_suffix, tasks in tasks_grouped.items() %}
+      {% for task in tasks %}
+      {
+        "task_key": "{{ task.task_suffix }}",
+        "depends_on": [
+          {
+            "task_key": "{{ task.depends_on }}"
+          }
+        ],
+        "notebook_task": {
+          "notebook_path": "{{ notebook_prefix }}{{ notebook_suffix }}",
+          "base_parameters": {
+            "pipeline_context": "{{ pipeline_context }}",
+            "delta_table_name": "{{ task.delta_table_name }}"
+          }
+        },
+        "job_cluster_key": "{{ job_cluster_key }}",
+        "timeout_seconds": 0,
+        "email_notifications": {}
+      },
+      {% endfor %}
+      {% endfor %}
+    ]
+  }
+}

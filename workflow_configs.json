@@ -1,0 +1,8 @@
+{
+    "workflow_wholesale": {
+      "notebook_prefix": "/Repos/Main/databricks_data_engineering/pipelines/bronze/",
+      "job_cluster_key": "workflow_bronze_cluster",
+      "pipeline_context": "bronze_x3_gl",
+      "depends_on": ["workflow_bronze_x3_gl"]
+    }
+  }
